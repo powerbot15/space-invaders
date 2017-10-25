@@ -123,17 +123,23 @@ var GameField = exports.GameField = function () {
         key: 'createField',
         value: function createField() {
 
-            this.field = {
+            this.dataField = {
 
                 sizeX: 50,
 
                 sizeY: 30
 
             };
+
+            this.gameField = document.querySelector('[data-field]');
+
+            this.gameContext = this.gameField.getContext('2d');
         }
     }, {
         key: 'createInvaders',
         value: function createInvaders() {
+
+            var invader = void 0;
 
             this.invaders = [];
 
@@ -141,7 +147,17 @@ var GameField = exports.GameField = function () {
 
                 for (var j = 0; j < 10; j++) {
 
-                    this.invaders.push(new _invader.Invader({ x: j, y: i }));
+                    invader = new _invader.Invader({
+
+                        x: j * 15,
+
+                        y: i * 15
+
+                    });
+
+                    this.invaders.push(invader);
+
+                    // invader.draw(this.gameContext);
                 }
             }
         }
@@ -149,11 +165,14 @@ var GameField = exports.GameField = function () {
         key: 'createPlayer',
         value: function createPlayer() {
 
-            this.player = new _player.Player({ x: 25, y: 0 });
+            this.player = new _player.Player({ x: 25, y: 50 });
         }
     }, {
         key: 'startGame',
-        value: function startGame() {}
+        value: function startGame() {
+
+            this.draw();
+        }
     }, {
         key: 'listenEvents',
         value: function listenEvents() {
@@ -170,6 +189,20 @@ var GameField = exports.GameField = function () {
 
             //    TODO bullet instances creation
 
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            var _this2 = this;
+
+            this.gameContext.fillStyle = '#000';
+
+            this.gameContext.fillRect(0, 0, this.gameField.width, this.gameField.width);
+
+            this.invaders.forEach(function (invader) {
+
+                invader.draw(_this2.gameContext);
+            });
         }
     }]);
 
@@ -249,6 +282,27 @@ var Invader = exports.Invader = function () {
                 position: this.position
 
             });
+        }
+    }, {
+        key: 'draw',
+        value: function draw(context) {
+            var upLeft = {
+
+                x: this.position.x,
+
+                y: this.position.y
+
+            };
+            var bottomRight = {
+
+                x: upLeft.x + 10,
+
+                y: upLeft.y + 10
+
+            };
+            context.fillStyle = '#FFF';
+
+            context.fillRect(upLeft.x, upLeft.y, bottomRight.x, bottomRight.y);
         }
     }]);
 

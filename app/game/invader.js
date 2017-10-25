@@ -36,6 +36,28 @@ export class Invader {
 
         });
 
+    };
+
+    draw (context) {
+        let upLeft = {
+
+            x : this.position.x,
+
+            y : this.position.y
+
+        };
+        let bottomRight = {
+
+            x : upLeft.x + 10,
+
+            y : upLeft.y + 10
+
+        };
+        context.fillStyle = '#FFF';
+
+        context.fillRect(upLeft.x, upLeft.y, bottomRight.x, bottomRight.y);
+
     }
+
 
 }

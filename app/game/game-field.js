@@ -26,17 +26,23 @@ export class GameField {
 
     createField () {
 
-        this.field = {
+        this.dataField = {
 
             sizeX : 50,
 
             sizeY : 30
 
-        }
+        };
+
+        this.gameField = document.querySelector('[data-field]');
+
+        this.gameContext = this.gameField.getContext('2d');
 
     };
 
     createInvaders () {
+
+        let invader;
 
         this.invaders = [];
 
@@ -44,7 +50,17 @@ export class GameField {
 
             for(let j = 0; j < 10 ; j++){
 
-                this.invaders.push(new Invader({x : j, y : i}));
+                invader = new Invader({
+
+                    x : j * 15,
+
+                    y : i * 15
+
+                });
+
+                this.invaders.push(invader);
+
+                // invader.draw(this.gameContext);
 
             }
 
@@ -54,11 +70,13 @@ export class GameField {
 
     createPlayer () {
 
-        this.player = new Player({x : 25, y : 0});
+        this.player = new Player({x : 25, y : 50});
 
     };
 
     startGame () {
+
+        this.draw();
 
     };
 
@@ -75,6 +93,21 @@ export class GameField {
     createBullet () {
 
     //    TODO bullet instances creation
+
+    };
+
+    draw () {
+
+        this.gameContext.fillStyle = '#000';
+
+        this.gameContext.fillRect(0, 0, this.gameField.width, this.gameField.width);
+
+
+        this.invaders.forEach((invader) => {
+
+            invader.draw(this.gameContext);
+
+        })
 
     }
 
