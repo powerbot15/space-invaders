@@ -102,10 +102,24 @@ var GameField = exports.GameField = function () {
     function GameField() {
         _classCallCheck(this, GameField);
 
-        this.init();
+        this.initInvadersIcon();
     }
 
     _createClass(GameField, [{
+        key: 'initInvadersIcon',
+        value: function initInvadersIcon() {
+            var _this = this;
+
+            this.img = document.createElement('img');
+
+            this.img.src = '/space-invaders/img/up.png';
+
+            this.img.addEventListener('load', function () {
+
+                _this.init();
+            }, false);
+        }
+    }, {
         key: 'init',
         value: function init() {
 
@@ -149,11 +163,11 @@ var GameField = exports.GameField = function () {
 
                     invader = new _invader.Invader({
 
-                        x: j * 15,
+                        x: j * 30,
 
-                        y: i * 15
+                        y: i * 30
 
-                    });
+                    }, this.img);
 
                     this.invaders.push(invader);
 
@@ -165,7 +179,7 @@ var GameField = exports.GameField = function () {
         key: 'createPlayer',
         value: function createPlayer() {
 
-            this.player = new _player.Player({ x: 25, y: 50 });
+            this.player = new _player.Player({ x: 300, y: 50 });
         }
     }, {
         key: 'startGame',
@@ -176,11 +190,11 @@ var GameField = exports.GameField = function () {
     }, {
         key: 'listenEvents',
         value: function listenEvents() {
-            var _this = this;
+            var _this2 = this;
 
             this.invaders.forEach(function (invader) {
 
-                invader.on('fire', _this.createBullet, _this);
+                invader.on('fire', _this2.createBullet, _this2);
             });
         }
     }, {
@@ -193,7 +207,7 @@ var GameField = exports.GameField = function () {
     }, {
         key: 'draw',
         value: function draw() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.gameContext.fillStyle = '#000';
 
@@ -201,8 +215,10 @@ var GameField = exports.GameField = function () {
 
             this.invaders.forEach(function (invader) {
 
-                invader.draw(_this2.gameContext);
+                invader.draw(_this3.gameContext);
             });
+
+            this.player.draw(this.gameContext);
         }
     }]);
 
@@ -220,13 +236,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Player = exports.Player = function Player(position) {
-    _classCallCheck(this, Player);
+var Player = exports.Player = function () {
+    function Player(position) {
+        _classCallCheck(this, Player);
 
-    this.position = position;
-};
+        this.position = position;
+    }
+
+    _createClass(Player, [{
+        key: 'draw',
+        value: function draw(context) {
+
+            var width = 10;
+
+            var height = 10;
+
+            context.fillStyle = '#FFF';
+
+            context.fillRect(this.position.x, this.position.y, width, height);
+        }
+    }]);
+
+    return Player;
+}();
 
 /***/ }),
 /* 3 */
@@ -249,12 +285,14 @@ var _eventsMixin = __webpack_require__(5);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Invader = exports.Invader = function () {
-    function Invader(position) {
+    function Invader(position, icon) {
         _classCallCheck(this, Invader);
 
         _eventsMixin.eventsMixin.extend(this);
 
         this.position = position;
+
+        this.icon = icon;
     }
 
     _createClass(Invader, [{
@@ -286,6 +324,7 @@ var Invader = exports.Invader = function () {
     }, {
         key: 'draw',
         value: function draw(context) {
+
             var upLeft = {
 
                 x: this.position.x,
@@ -293,16 +332,16 @@ var Invader = exports.Invader = function () {
                 y: this.position.y
 
             };
-            var bottomRight = {
 
-                x: upLeft.x + 10,
+            var width = 25;
 
-                y: upLeft.y + 10
+            var height = 25;
 
-            };
-            context.fillStyle = '#FFF';
+            // context.fillStyle = '#FFF';
 
-            context.fillRect(upLeft.x, upLeft.y, bottomRight.x, bottomRight.y);
+            // context.fillRect(upLeft.x, upLeft.y, width, height);
+
+            context.drawImage(this.icon, upLeft.x, upLeft.y, width, height);
         }
     }]);
 

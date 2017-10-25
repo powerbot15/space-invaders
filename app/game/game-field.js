@@ -6,7 +6,21 @@ export class GameField {
 
     constructor () {
 
-        this.init();
+        this.initInvadersIcon();
+
+    };
+
+    initInvadersIcon () {
+
+        this.img = document.createElement('img');
+
+        this.img.src = '/space-invaders/img/up.png';
+
+        this.img.addEventListener('load', () => {
+
+            this.init();
+
+        }, false);
 
     };
 
@@ -52,11 +66,11 @@ export class GameField {
 
                 invader = new Invader({
 
-                    x : j * 15,
+                    x : j * 30,
 
-                    y : i * 15
+                    y : i * 30
 
-                });
+                }, this.img);
 
                 this.invaders.push(invader);
 
@@ -70,7 +84,7 @@ export class GameField {
 
     createPlayer () {
 
-        this.player = new Player({x : 25, y : 50});
+        this.player = new Player({x : 300, y : 50});
 
     };
 
@@ -107,7 +121,9 @@ export class GameField {
 
             invader.draw(this.gameContext);
 
-        })
+        });
+
+        this.player.draw(this.gameContext);
 
     }
 

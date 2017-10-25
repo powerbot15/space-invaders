@@ -4,11 +4,13 @@ import {eventsMixin} from '../utils/events-mixin'
 
 export class Invader {
 
-    constructor (position) {
+    constructor (position, icon) {
 
         eventsMixin.extend(this);
 
         this.position = position;
+
+        this.icon = icon;
 
     };
 
@@ -39,6 +41,7 @@ export class Invader {
     };
 
     draw (context) {
+
         let upLeft = {
 
             x : this.position.x,
@@ -46,16 +49,16 @@ export class Invader {
             y : this.position.y
 
         };
-        let bottomRight = {
 
-            x : upLeft.x + 10,
+        let width = 25;
 
-            y : upLeft.y + 10
+        let height = 25;
 
-        };
-        context.fillStyle = '#FFF';
+        // context.fillStyle = '#FFF';
 
-        context.fillRect(upLeft.x, upLeft.y, bottomRight.x, bottomRight.y);
+        // context.fillRect(upLeft.x, upLeft.y, width, height);
+
+        context.drawImage(this.icon, upLeft.x, upLeft.y, width, height);
 
     }
 
