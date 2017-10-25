@@ -98,10 +98,6 @@ var _invader = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var INVADERS_PER_ROW = 10;
-
-var ROW_COUNT = 10;
-
 var GameField = exports.GameField = function () {
     function GameField() {
         _classCallCheck(this, GameField);
@@ -141,7 +137,13 @@ var GameField = exports.GameField = function () {
 
             this.invaders = [];
 
-            for (var i = 0; i < 20; i++) {}
+            for (var i = 0; i < 5; i++) {
+
+                for (var j = 0; j < 10; j++) {
+
+                    this.invaders.push(new _invader.Invader({ x: j, y: i }));
+                }
+            }
         }
     }, {
         key: 'createPlayer',

@@ -2,10 +2,6 @@ import {Player} from './player';
 
 import {Invader} from './invader'
 
-const INVADERS_PER_ROW = 10;
-
-const ROW_COUNT = 10;
-
 export class GameField {
 
     constructor () {
@@ -44,7 +40,13 @@ export class GameField {
 
         this.invaders = [];
 
-        for(let i = 0; i < 20; i++){
+        for(let i = 0; i < 5; i++){
+
+            for(let j = 0; j < 10 ; j++){
+
+                this.invaders.push(new Invader({x : j, y : i}));
+
+            }
 
         }
 
